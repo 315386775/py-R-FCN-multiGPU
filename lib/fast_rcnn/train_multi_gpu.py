@@ -23,7 +23,7 @@ class SolverWrapper(object):
     """
 
     def __init__(self, solver_prototxt, roidb, output_dir, gpu_id,
-                 pretrained_model=None):
+                 pretrained_model=None, previous_state=None):
         """Initialize the SolverWrapper."""
         self.output_dir = output_dir
         self.gpu_id = gpu_id
@@ -45,7 +45,11 @@ class SolverWrapper(object):
             print ('Loading pretrained model '
                    'weights from {:s}').format(pretrained_model)
             self.solver.net.copy_from(pretrained_model)
-
+        elif previous_state is not None:
+            print ('Restoring State from '
+                    ' from {:s}').format(previous_state)
+            self.solver.restore(previous_state)
+        # Modified line 2017.06.01
         self.solver_param = caffe_pb2.SolverParameter()
         with open(solver_prototxt, 'rt') as f:
             pb2.text_format.Merge(f.read(), self.solver_param)
@@ -200,7 +204,7 @@ def filter_roidb(roidb):
     return filtered_roidb
 
 
-def train_net_multi_gpu(solver_prototxt, roidb, output_dir, pretrained_model, max_iter, gpus):
+def train_net_multi_gpu(solver_prototxt, roidb, output_dir, pretrained_model, previous_state, max_iter, gpus):
     """Train a Fast R-CNN network."""
     uid = caffe.NCCL.new_uid()
     caffe.init_log()
@@ -209,7 +213,7 @@ def train_net_multi_gpu(solver_prototxt, roidb, output_dir, pretrained_model, ma
 
     for rank in range(len(gpus)):
         p = Process(target=solve,
-                    args=(solver_prototxt, roidb, pretrained_model, gpus, uid, rank, output_dir, max_iter))
+                    args=(solver_prototxt, roidb, pretrained_model, previous_state, gpus, uid, rank, output_dir, max_iter))
         p.daemon = False
         p.start()
         procs.append(p)
