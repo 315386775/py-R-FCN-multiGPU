@@ -34,6 +34,10 @@ def parse_args():
     parser.add_argument('--weights', dest='pretrained_model',
                         help='initialize with pretrained model weights',
                         default=None, type=str)
+    # Add snapshot by wei
+    parser.add_argument('--snapshot', dest='previous_state',
+                        help='initialize with previous state',
+                        default=None, type=str)
     parser.add_argument('--cfg', dest='cfg_file',
                         help='optional config file',
                         default=None, type=str)
