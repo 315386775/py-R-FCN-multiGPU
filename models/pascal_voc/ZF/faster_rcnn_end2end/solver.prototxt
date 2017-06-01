@@ -19,7 +19,7 @@ weight_decay: 0.0005
 
 # We disable standard caffe solver snapshotting and implement our own snapshot
 # function
-snapshot: 0
+snapshot: 10000
 # We still use the snapshot prefix, though
 snapshot_prefix: "zf_faster_rcnn"
 iter_size: 2
