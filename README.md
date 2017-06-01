@@ -1,7 +1,7 @@
 ## Correct two problems 2017.05.31
 1. Train use the ZF model: Please modify the code in ./src/caffe/proto
 
-//DropoutParameter 
+Add DropoutParameter in proto:
 message DropoutParameter 
 {  
   optional float dropout_ratio = 1 [default = 0.5]; // dropout ratio  
