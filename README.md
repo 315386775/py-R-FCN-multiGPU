@@ -1,8 +1,9 @@
-## Correct two problems
+## Correct two problems 2017.05.31
 1. Train use the ZF model: Please modify the code in ./src/caffe/proto
 
 //DropoutParameter 
-message DropoutParameter {  
+message DropoutParameter 
+{  
   optional float dropout_ratio = 1 [default = 0.5]; // dropout ratio  
   optional bool scale_train = 2 [default = true];  // scale train or test phase  
 }
@@ -13,6 +14,10 @@ When contrast the log file used by py-faster-rcnn and py-R-FCN-multiGPU. You can
 
 Wrote snapshot to: /home/xxx/py-faster-rcnn/output/faster_rcnn_end2end/voc_2007_trainval/xxx.caffemodel
 done solving (The missing line)
+
+## Resume Training from snapshot 2017.06.01
+
+Rewrite the train_net.py and train.py
 
 # py-R-FCN-multiGPU
 R-FCN: Object Detection via Region-based Fully Convolutional Networks
